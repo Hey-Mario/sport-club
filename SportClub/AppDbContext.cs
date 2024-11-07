@@ -18,7 +18,7 @@ namespace SportClub
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure the Member entity
+            
             modelBuilder.Entity<Member>(entity =>
             {
                 entity.ToTable("member");
@@ -30,10 +30,10 @@ namespace SportClub
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(255).HasColumnName("email");
                 entity.Property(e => e.Phone).IsRequired().HasMaxLength(20).HasColumnName("phone");
 
-                // Removed MembershipId configuration
+                
             });
 
-            // Configure the Sport entity
+            
             modelBuilder.Entity<Sport>(entity =>
             {
                 entity.ToTable("sport");
@@ -44,7 +44,7 @@ namespace SportClub
                 entity.Property(e => e.Description).HasMaxLength(1000).HasColumnName("description");
             });
 
-            // Configure the Membership entity
+            
             modelBuilder.Entity<Membership>(entity =>
             {
                 entity.ToTable("membership");
@@ -60,7 +60,7 @@ namespace SportClub
 
             });
 
-            // Configure the Subscription entity
+            
             modelBuilder.Entity<Subscription>(entity =>
             {
                 entity.ToTable("subscription");
@@ -74,7 +74,7 @@ namespace SportClub
                 entity.Property(e => e.EndDate).IsRequired().HasColumnName("end_date");
             });
 
-            // Configure the User entity
+            
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("user");

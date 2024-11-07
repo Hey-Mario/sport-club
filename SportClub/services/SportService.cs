@@ -14,7 +14,7 @@ namespace SportClub
             _context = context;
         }
 
-        // Create a new sport with user input
+        
         public void Create()
         {
             var sport = new Sport();
@@ -31,19 +31,19 @@ namespace SportClub
             Console.WriteLine("Sport added successfully!");
         }
 
-        // Retrieve all sports
+        
         public List<Sport> ReadAll()
         {
             return _context.Sport.ToList();
         }
 
-        // Retrieve a single sport by ID
+        
         public Sport ReadById(int id)
         {
             return _context.Sport.FirstOrDefault(s => s.Id == id);
         }
 
-        // Update an existing sport with user input
+        
         public void Update()
         {
             Console.WriteLine("Enter Sport ID to update:");
@@ -77,7 +77,7 @@ namespace SportClub
             Console.WriteLine("Sport updated successfully!");
         }
 
-        // Delete a sport
+        
         public void Delete(int id)
         {
             var sport = _context.Sport.Find(id);

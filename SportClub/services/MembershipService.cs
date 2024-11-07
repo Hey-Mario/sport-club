@@ -14,7 +14,7 @@ namespace SportClub
             _context = context;
         }
 
-        // Create a new membership with user input
+        
         public void Create()
         {
             var membership = new Membership();
@@ -37,19 +37,19 @@ namespace SportClub
             Console.WriteLine("Membership added successfully!");
         }
 
-        // Retrieve all memberships
+        
         public List<Membership> ReadAll()
         {
             return _context.Membership.ToList();
         }
 
-        // Retrieve a single membership by ID
+        
         public Membership ReadById(int id)
         {
             return _context.Membership.FirstOrDefault(m => m.Id == id);
         }
 
-        // Update an existing membership with user input
+        
         public void Update()
         {
             Console.WriteLine("Enter Membership ID to update:");
@@ -93,7 +93,7 @@ namespace SportClub
             Console.WriteLine("Membership updated successfully!");
         }
 
-        // Delete a membership
+        
         public void Delete(int id)
         {
             var membership = _context.Membership.Find(id);

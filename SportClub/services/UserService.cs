@@ -14,7 +14,7 @@ namespace SportClub
             _context = context;
         }
 
-        // Create a new user with user input
+        
         public void Create()
         {
             var user = new User();
@@ -23,7 +23,7 @@ namespace SportClub
             user.Email = Console.ReadLine();
 
             Console.WriteLine("Enter Password:");
-            user.Password = Console.ReadLine();  // Note: In a real application, ensure to hash the password before storing it.
+            user.Password = Console.ReadLine();  
 
             _context.User.Add(user);
             _context.SaveChanges();
@@ -31,19 +31,19 @@ namespace SportClub
             Console.WriteLine("User added successfully!");
         }
 
-        // Retrieve all users
+        
         public List<User> ReadAll()
         {
             return _context.User.ToList();
         }
 
-        // Retrieve a single user by ID
+        
         public User ReadById(int id)
         {
             return _context.User.FirstOrDefault(u => u.Id == id);
         }
 
-        // Update an existing user with user input
+        
         public void Update()
         {
             Console.WriteLine("Enter User ID to update:");
@@ -67,7 +67,7 @@ namespace SportClub
                 user.Email = email;
 
             Console.WriteLine("Enter Password:");
-            user.Password = Console.ReadLine();  // Note: In a real application, ensure to hash the password before storing it.
+            user.Password = Console.ReadLine();  
 
             _context.User.Update(user);
             _context.SaveChanges();
@@ -75,7 +75,7 @@ namespace SportClub
             Console.WriteLine("User updated successfully!");
         }
 
-        // Delete a user
+        
         public void Delete(int id)
         {
             var user = _context.User.Find(id);
@@ -91,13 +91,13 @@ namespace SportClub
             }
         }
 
-        // Login user
+        
         public bool Login()
         {
             Console.WriteLine("Enter Email:");
             string email = Console.ReadLine();
             Console.WriteLine("Enter Password:");
-            string password = Console.ReadLine();  // Note: In a real application, ensure to hash the password before comparing it.
+            string password = Console.ReadLine();  
 
             var user = _context.User.FirstOrDefault(u => u.Email == email && u.Password == password);
             if (user != null)

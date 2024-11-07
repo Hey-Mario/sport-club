@@ -14,7 +14,7 @@ namespace SportClub
             _context = context;
         }
 
-        // Create a new subscription with user input
+        
         public void Create()
         {
             var subscription = new Subscription();
@@ -37,19 +37,19 @@ namespace SportClub
             Console.WriteLine("Subscription added successfully!");
         }
 
-        // Retrieve all subscriptions
+        
         public List<Subscription> ReadAll()
         {
             return _context.Subscription.ToList();
         }
 
-        // Retrieve a single subscription by ID
+        
         public Subscription ReadById(int id)
         {
             return _context.Subscription.FirstOrDefault(s => s.Id == id);
         }
 
-        // Update an existing subscription with user input
+        
         public void Update()
         {
             Console.WriteLine("Enter Subscription ID to update:");
@@ -93,7 +93,7 @@ namespace SportClub
             Console.WriteLine("Subscription updated successfully!");
         }
 
-        // Delete a subscription
+        
         public void Delete(int id)
         {
             var subscription = _context.Subscription.Find(id);

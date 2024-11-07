@@ -14,10 +14,11 @@ namespace SportClub
             _context = context;
         }
 
-        // Create a new member with user input
+        
         public void Create()
         {
             var member = new Member();
+            var memberShipService = new MembershipService(_context);
 
             Console.WriteLine("Enter First Name:");
             member.FirstName = Console.ReadLine();
@@ -31,25 +32,34 @@ namespace SportClub
             Console.WriteLine("Enter Phone:");
             member.Phone = Console.ReadLine();
 
+            Console.WriteLine("Now, Please enter the membership");
+            memberShipService.ReadAll();
+
             _context.Member.Add(member);
             _context.SaveChanges();
 
             Console.WriteLine("Member added successfully!");
         }
 
-        // Retrieve all members
+        
         public List<Member> ReadAll()
         {
-            return _context.Member.ToList();
+            var members = _context.Member.ToList();
+            return members;
         }
 
-        // Retrieve a single member by ID
+        
         public Member ReadById(int id)
         {
-            return _context.Member.FirstOrDefault(m => m.Id == id);
+            var member = _context.Member.FirstOrDefault(m => m.Id == id);
+            if (member == null)
+            {
+                Console.WriteLine("Member not found.");
+            }
+            return member;
         }
 
-        // Update an existing member with user input
+        
         public void Update()
         {
             Console.WriteLine("Enter Member ID to update:");
@@ -93,7 +103,7 @@ namespace SportClub
             Console.WriteLine("Member updated successfully!");
         }
 
-        // Delete a member
+        
         public void Delete(int id)
         {
             var member = _context.Member.Find(id);

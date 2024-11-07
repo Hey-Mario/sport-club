@@ -10,36 +10,43 @@ namespace SportClub
             {
                 using (var context = new AppDbContext())
                 {
-                    context.Database.EnsureCreated();  // This creates the database if it does not exist
+                    context.Database.EnsureCreated();  
 
-                    // List all tables statically
-                    var tableNames = new List<string> { "Members", "Subscriptions", "Sports", "MemberShips" };
+                    var tableNames = new List<string> { "members", "subscriptions", "sports", "memberShips" };
 
-                    while (true)  // Loop to allow multiple operations
+                    while (true)
                     {
-                        Console.WriteLine("Voici les tables disponibles:");
+                        Console.WriteLine("\n=================================\n");
+                        Console.WriteLine("\nVoici les tables disponibles:");
                         foreach (var tableName in tableNames)
                         {
                             Console.WriteLine("> " + tableName);
                         }
 
-                        Console.WriteLine("\nEntrez le nom de la table que vous souhaitez manipuler:");
-                        var selectedTable = Console.ReadLine();
+                        var selectedTable = "";
+                        while (!tableNames.Contains(selectedTable))
+                        {
+                            Console.WriteLine("\nEntrez le nom de la table que vous souhaitez manipuler:");
+                            selectedTable = Console.ReadLine();
+                        }
 
+                        Console.WriteLine("\n=================================\n");
                         Console.WriteLine("Select an action:");
                         Console.WriteLine("1. Add");
                         Console.WriteLine("2. List");
                         Console.WriteLine("3. Update");
                         Console.WriteLine("4. Create");
                         Console.WriteLine("5. Find by ID");
-                        Console.WriteLine("6. Exit");
-                        Console.WriteLine("Enter the number of the action you want to perform:");
+                        Console.WriteLine("6. Search");
+                        Console.WriteLine("7. Exit");
+                        Console.WriteLine("\n=================================\n");
+                        Console.WriteLine("\nEnter the number of the action you want to perform:");
                         var action = Console.ReadLine();
 
-                        if (action == "6")
+                        if (action == "7")
                         {
                             Console.WriteLine("Exiting program...");
-                            break;  // Exit the loop and end the program
+                            break;
                         }
 
                         HandleTableAction(context, selectedTable, action);
@@ -65,7 +72,7 @@ namespace SportClub
                     var entries = service.ReadAll();
                     foreach (var entry in entries)
                     {
-                        Console.WriteLine(entry.ToString());  // Ensure your classes override ToString() or adjust this line accordingly
+                        Console.WriteLine(entry.ToString());
                     }
                     break;
                 case "3":
@@ -85,7 +92,7 @@ namespace SportClub
                         var item = service.ReadById(id);
                         if (item != null)
                         {
-                            Console.WriteLine("Found: " + item.ToString());  // Ensure your classes override ToString() or adjust this line accordingly
+                            Console.WriteLine("Found: " + item.ToString());
                         }
                         else
                         {
@@ -101,6 +108,7 @@ namespace SportClub
                     Console.WriteLine("Action not recognized.");
                     break;
             }
+            Console.WriteLine("\n=================================\n");
         }
 
         static void HandleTableAction(AppDbContext context, string tableName, string action)
@@ -113,7 +121,28 @@ namespace SportClub
                     break;
                 case "members":
                     var memberService = new MemberService(context);
-                    PerformActions(memberService, action);
+                    if (action == "6")
+                    {
+                        Console.WriteLine("Enter name to search:");
+                        string name = Console.ReadLine();
+                        var results = memberService.SearchInformation(name);
+                        foreach (var info in results)
+                        {
+                            Console.WriteLine($"\nMember: {info.FirstName} {info.LastName}, Email: {info.Email}");
+                            if (info.Subscriptions.Count() > 0)
+                            {
+                                Console.WriteLine($"Membership Type: {info.Membership.Type}, Sport: {info.Sport}");
+                                foreach (var sub in info.Subscriptions)
+                                {
+                                    Console.WriteLine($"Subscription: {sub.StartDate.ToShortDateString()} to {sub.EndDate.ToShortDateString()}");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        PerformActions(memberService, action);
+                    }
                     break;
                 case "sports":
                     var sportService = new SportService(context);
