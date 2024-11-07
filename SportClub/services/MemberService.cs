@@ -14,33 +14,61 @@ namespace SportClub
             _context = context;
         }
 
-        // Create a new member
+        
         public void AddMember(CreateMemberDto member)
         {
+            
             _context.Member.Add(member);
+            _context.SaveChanges(); 
+
+            
+            var membership = _context.Membership.FirstOrDefault(m => m.Id == member.MemberShipId);
+            if (membership == null)
+            {
+                throw new Exception("Membership not found.");
+            }
+
+            
+            var endDate = DateTime.Now.AddMonths(membership.DurationMonths);
+
+            
+            var subscription = new Subscription
+            {
+                MemberId = member.Id,
+                MembershipId = member.MemberShipId,
+                StartDate = DateTime.Now,
+                EndDate = endDate,
+                Member = member,
+                Membership = membership
+            };
+
+            
+            _context.Subscription.Add(subscription);
+
+            
             _context.SaveChanges();
         }
 
-        // Retrieve all members
+        
         public List<Member> GetAllMembers()
         {
             return _context.Member.ToList();
         }
 
-        // Retrieve a single member by ID
+        
         public Member GetMemberById(int id)
         {
             return _context.Member.FirstOrDefault(m => m.Id == id);
         }
 
-        // Update an existing member
+        
         public void UpdateMember(Member member)
         {
             _context.Member.Update(member);
             _context.SaveChanges();
         }
 
-        // Delete a member
+        
         public void DeleteMember(int id)
         {
             var member = _context.Member.Find(id);

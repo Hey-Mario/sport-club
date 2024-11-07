@@ -10,7 +10,7 @@ namespace SportClub
             {
                 using (var context = new AppDbContext())
                 {
-                    context.Database.EnsureCreated();  // This creates the database if it does not exist
+                    context.Database.EnsureCreated();
                     var memberService = new MemberService(context);
 
                     var memberInfos = memberService.SearchInformation("John");

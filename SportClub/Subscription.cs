@@ -11,7 +11,6 @@ namespace SportClub
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        // Navigation properties
         public Member Member { get; set; }
         public Membership Membership { get; set; }
     }
