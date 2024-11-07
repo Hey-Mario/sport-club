@@ -50,5 +50,27 @@ namespace SportClub
                 _context.SaveChanges();
             }
         }
+
+        public List<MemberInfo> SearchInformation(string name)
+        {
+            var members = _context.Member
+                .Where(m => m.FirstName.Contains(name) || m.LastName.Contains(name))
+                .Select(m => new MemberInfo
+                {
+                    MemberId = m.Id,
+                    FirstName = m.FirstName,
+                    LastName = m.LastName,
+                    Email = m.Email,
+                    Phone = m.Phone,
+                    Membership = m.Subscriptions.OrderByDescending(s => s.StartDate)
+                                .Select(s => s.Membership).FirstOrDefault(),
+                    Sport = m.Subscriptions.OrderByDescending(s => s.StartDate)
+                                .Select(s => s.Membership.Sport.Name).FirstOrDefault(),
+                    Subscriptions = m.Subscriptions.ToList()
+                })
+                .ToList();
+
+            return members;
+        }
     }
 }
