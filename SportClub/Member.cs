@@ -12,4 +12,9 @@ namespace SportClub
         public string Phone { get; set; }
         public List<Subscription> Subscriptions { get; set; } = new List<Subscription>();
     }
+
+    public class CreateMemberDto : Member
+    {
+        public int MemberShipId { get; set; }
+    }
 }

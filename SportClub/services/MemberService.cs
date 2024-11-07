@@ -15,7 +15,7 @@ namespace SportClub
         }
 
         // Create a new member
-        public void AddMember(Member member)
+        public void AddMember(CreateMemberDto member)
         {
             _context.Member.Add(member);
             _context.SaveChanges();
